@@ -51,7 +51,7 @@ def write_to_parquet(df: pd.DataFrame, dataset_name: str) -> Path:
     '''Write DataFrame out locally as parquet file'''
     path = Path(f'data/{dataset_name}.parquet')
     df.to_parquet(path, compression='gzip')
-    runcmd(f'data/{dataset_name}.json')
+    runcmd(f'rm data/{dataset_name}.json')
     return path       
 
 def load_gcs(path):

@@ -1,4 +1,8 @@
 pruebas/
+src/data/
+*.tfstate
+*.lock.hcl
+src/terraform/.terraform/
 
 
 # Byte-compiled / optimized / DLL files

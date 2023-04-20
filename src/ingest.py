@@ -1,4 +1,3 @@
-import os
 import subprocess
 import itertools
 from io import StringIO
@@ -6,7 +5,7 @@ from pathlib import Path
 import pandas as pd
 from prefect import flow, task
 from prefect_gcp.cloud_storage import GcsBucket
-
+import yaml
 
 def runcmd(cmd, verbose = False, *args, **kwargs):
     '''Executes bash commands in another terminal session'''
@@ -22,7 +21,10 @@ def runcmd(cmd, verbose = False, *args, **kwargs):
         print(std_out.strip(), std_err)
     pass
 
+with open('config.yaml', 'r') as file:
+    config = yaml.load(file, Loader=yaml.FullLoader)
 
+@task()
 def fetch_data(year: int, month: int, day: int, hour: int) -> str:
     '''Fetch data from source'''
     dataset_name = f'{year:04}-{month:02}-{day:02}-{hour}'
@@ -31,7 +33,7 @@ def fetch_data(year: int, month: int, day: int, hour: int) -> str:
     runcmd(cmd_fetch)
     return dataset_name
 
-
+@task()
 def ingest_data(dataset_name: str) -> pd.DataFrame:
     '''Ingest json data with pandas'''
     dfs = []
@@ -47,6 +49,7 @@ def ingest_data(dataset_name: str) -> pd.DataFrame:
     df = pd.concat(dfs)
     return df
 
+@task()
 def write_to_parquet(df: pd.DataFrame, dataset_name: str) -> Path:
     '''Write DataFrame out locally as parquet file'''
     path = Path(f'data/{dataset_name}.parquet')

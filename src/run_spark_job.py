@@ -1,11 +1,5 @@
-import os
 import subprocess
-import itertools
-from io import StringIO
-from pathlib import Path
-import pandas as pd
-from prefect import flow, task
-
+from prefect import task
 import yaml
 
 
@@ -23,13 +17,11 @@ def runcmd(cmd: str, verbose = False, *args, **kwargs) -> None:
         print(std_out.strip(), std_err)
     pass
 
-with open('config.yaml', 'r') as file:
-    config = yaml.load(file, Loader=yaml.FullLoader)
-
 
 @task()
 def submit_job(cluster: str, region: str, spark_file_path: str, temp_dataproc_bucket: str,
-               data_bucket_path: str, bigquery_table: str) -> None:
+               data_bucket_path: str, bigquery_table: str, year: str, month: str, 
+               day: str) -> None:
     ''' Submit a job to Dataproc '''
     runcmd(f'''gcloud dataproc jobs submit pyspark \
             --cluster={cluster} \
@@ -40,16 +32,26 @@ def submit_job(cluster: str, region: str, spark_file_path: str, temp_dataproc_bu
                 --temp_dataproc_bucket={temp_dataproc_bucket}
                 --data_bucket_path={data_bucket_path}
                 --bigquery_table={bigquery_table}
+                --year={year}
+                --month={month}
+                --day={day}
                 '''
            )
     
 if __name__ == '__main__':
+
+    with open('config.yaml', 'r') as file:
+        config = yaml.load(file, Loader=yaml.FullLoader)
+
     cluster = config['GCP']['CLUSTER']
     region = config['GCP']['REGION']
     spark_file_path = config['GCP']['SPARK_PATH_FILE']
     temp_dataproc_bucket = config['GCP']['TEMP_DATAPROC_BUCKET']
     data_bucket_path = config['GCP']['DATA_BUCKET_PATH']
     bigquery_table = config['GCP']['BIGQUERY_TABLE']
+    year = config['GH']['YEAR']
+    month = config['GH']['MONTH']
+    day = config['GH']['DAY']
 
     submit_job(cluster, region, spark_file_path, temp_dataproc_bucket,
-               data_bucket_path, bigquery_table)
+               data_bucket_path, bigquery_table, year, month, day)

@@ -79,8 +79,8 @@ def parent_flow(year: int, month: int, day: int, hours: list[int]) -> None:
         fetch_n_load(year, month, day, hour)
 
 if __name__ == "__main__":
-    year = 2023
-    month = 4
-    day = 1
+    year = config['GH']['YEAR']
+    month = config['GH']['MONTH']
+    day = config['GH']['DAY']
     hours = list(range(24))
     parent_flow(year, month, day, hours)

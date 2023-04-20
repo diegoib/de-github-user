@@ -1,9 +1,9 @@
 GCP:
   CLUSTER: test
   REGION: europe-west-1
-  SPARK_PATH_FILE: prueba1
-  TEMP_DATAPROC_BUCKET: prueba2
-  DATA_BUCKET_PATH: gs://de_project_bucket_de-zoomcamp-386310/code/transformation_spark.py
+  SPARK_PATH_FILE: gs://de_project_bucket_de-zoomcamp-386310/code/transformation_spark.py
+  TEMP_DATAPROC_BUCKET: 
+  DATA_BUCKET: de_project_bucket_de-zoomcamp-386310
   BIGQUERY_TABLE: de_project.report
 GH:
   YEAR: 2023

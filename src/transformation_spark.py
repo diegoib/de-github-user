@@ -8,13 +8,19 @@ from pyspark.sql import functions as F
 parser = argparse.ArgumentParser()
 
 parser.add_argument('--temp_dataproc_bucket', required=True)
-parser.add_argument('--data_bucket_path', required=True)
+parser.add_argument('--data_bucket', required=True)
 parser.add_argument('--bigquery_table', required=True)
+parser.add_argument('--year', required=True)
+parser.add_argument('--month', required=True)
+parser.add_argument('--day', required=True)
 args = parser.parse_args()
 
 temp_dataproc_bucket = args.temp_dataproc_bucket
-data_bucket_path = args.data_bucket_path
+data_bucket = args.data_bucket
 bigquery_table = args.bigquery_table
+year = args.year
+month = args.month
+day = arg.day
 
 spark = SparkSession.builder \
     .appName('test_project') \
@@ -22,13 +28,11 @@ spark = SparkSession.builder \
 
 spark.conf.set('temporaryGcsBucket', temp_dataproc_bucket)
 
-df = spark.read.parquet(data_bucket_path)
+path_files = f'gs://{data_bucket}/data/{year}-{month}-{day}-*'
+df = spark.read.parquet(path_files)
 
-'''
-
-CODIGO CON LAS TRANSFORMACIONES
-
-'''
+df = df.select(F.date_trunc("Hour", F.col('created_at')).alias('Hour'),
+        F.col('actor.login'))
 
 df.write.format('bigquery') \
     .option('table', bigquery_table) \

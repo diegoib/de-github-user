@@ -48,4 +48,3 @@ df_result.write.format('bigquery') \
 output es un parámetro con el schema.table de bigquery
 
 requirements:
-pip3 install --user --upgrade google-cloud-bigquery

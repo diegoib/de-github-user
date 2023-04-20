@@ -1,8 +1,8 @@
 GCP:
-  CLUSTER: test
-  REGION: europe-west-1
+  CLUSTER: cluster-2f70
+  REGION: europe-west2
   SPARK_PATH_FILE: gs://de_project_bucket_de-zoomcamp-386310/code/transformation_spark.py
-  TEMP_DATAPROC_BUCKET: 
+  TEMP_DATAPROC_BUCKET: dataproc-temp-europe-west2-798822437747-927ytg0x
   DATA_BUCKET: de_project_bucket_de-zoomcamp-386310
   BIGQUERY_TABLE: de_project.report
 GH:

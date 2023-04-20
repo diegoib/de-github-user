@@ -20,7 +20,7 @@ data_bucket = args.data_bucket
 bigquery_table = args.bigquery_table
 year = args.year
 month = args.month
-day = arg.day
+day = args.day
 
 spark = SparkSession.builder \
     .appName('test_project') \
@@ -28,11 +28,13 @@ spark = SparkSession.builder \
 
 spark.conf.set('temporaryGcsBucket', temp_dataproc_bucket)
 
-path_files = f'gs://{data_bucket}/data/{year}-{month}-{day}-*'
+path_files = f'gs://{data_bucket}/data/{year}-{month.zfill(2)}-{day.zfill(2)}-*'
 df = spark.read.parquet(path_files)
 
 df = df.select(F.date_trunc("Hour", F.col('created_at')).alias('Hour'),
-        F.col('actor.login'))
+        F.col('type'),
+        F.col('actor.display_login').alias('user_name'),
+        F.col('repo.name').alias('repo_name'))
 
 df.write.format('bigquery') \
     .option('table', bigquery_table) \

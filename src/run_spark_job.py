@@ -1,5 +1,5 @@
 import subprocess
-from prefect import task
+from prefect import flow
 import yaml
 
 
@@ -18,22 +18,22 @@ def runcmd(cmd: str, verbose = False, *args, **kwargs) -> None:
     pass
 
 
-@task()
+@flow()
 def submit_job(cluster: str, region: str, spark_file_path: str, temp_dataproc_bucket: str,
-               data_bucket_path: str, bigquery_table: str, year: str, month: str, 
+               data_bucket: str, bigquery_table: str, year: str, month: str, 
                day: str) -> None:
     ''' Submit a job to Dataproc '''
     runcmd(f'''gcloud dataproc jobs submit pyspark \
             --cluster={cluster} \
             --region={region} \
-            -- jars=gs//spark-lib/bigquey/spark-bigquery-latest_2.12.jar \
-            {spark_file_path}
-            --
-                --temp_dataproc_bucket={temp_dataproc_bucket}
-                --data_bucket_path={data_bucket_path}
-                --bigquery_table={bigquery_table}
-                --year={year}
-                --month={month}
+            --jars=gs://spark-lib/bigquery/spark-3.1-bigquery-0.30.0.jar \
+            {spark_file_path} \
+            -- \
+                --temp_dataproc_bucket={temp_dataproc_bucket} \
+                --data_bucket={data_bucket} \
+                --bigquery_table={bigquery_table} \
+                --year={year} \
+                --month={month} \
                 --day={day}
                 '''
            )
@@ -47,11 +47,11 @@ if __name__ == '__main__':
     region = config['GCP']['REGION']
     spark_file_path = config['GCP']['SPARK_PATH_FILE']
     temp_dataproc_bucket = config['GCP']['TEMP_DATAPROC_BUCKET']
-    data_bucket_path = config['GCP']['DATA_BUCKET_PATH']
+    data_bucket = config['GCP']['DATA_BUCKET']
     bigquery_table = config['GCP']['BIGQUERY_TABLE']
     year = config['GH']['YEAR']
     month = config['GH']['MONTH']
     day = config['GH']['DAY']
 
     submit_job(cluster, region, spark_file_path, temp_dataproc_bucket,
-               data_bucket_path, bigquery_table, year, month, day)
+               data_bucket, bigquery_table, year, month, day)

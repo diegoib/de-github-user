@@ -47,4 +47,25 @@ df_result.write.format('bigquery') \
 
 output es un parámetro con el schema.table de bigquery
 
-requirements:
+
+```
+gsutil cp src/transformation_spark.py gs://de_project_bucket_de-zoomcamp-386310/code/transformation_spark.py
+
+
+
+*****
+
+gcloud dataproc jobs submit pyspark \
+            --cluster=cluster-2f70 \
+            --region=europe-west2 \
+            --jars=gs://spark-lib/bigquery/spark-3.1-bigquery-0.30.0.jar \
+            gs://de_project_bucket_de-zoomcamp-386310/code/transformation_spark.py \
+            -- \
+                --temp_dataproc_bucket=dataproc-temp-europe-west2-798822437747-927ytg0x \
+                --data_bucket=de_project_bucket_de-zoomcamp-386310  \
+                --bigquery_table=de_project.report \
+                --year=2023 \
+                --month=1 \
+                --day=16
+
+                

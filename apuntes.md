@@ -71,3 +71,4 @@ gcloud dataproc jobs submit pyspark \
 
 2. añadir particion (hacer)
 3. como se orquestran todos los pasos? 
+4. ver si con os.system aparece la log

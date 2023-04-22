@@ -68,4 +68,6 @@ gcloud dataproc jobs submit pyspark \
                 --month=1 \
                 --day=16
 
-                
+
+2. añadir particion (hacer)
+3. como se orquestran todos los pasos? 

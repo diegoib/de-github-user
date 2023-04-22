@@ -38,4 +38,6 @@ df = df.select(F.date_trunc("Hour", F.col('created_at')).alias('Hour'),
 
 df.write.format('bigquery') \
     .option('table', bigquery_table) \
+    .option('partitionType', 'HOUR') \
+    .option('partitionField', 'Hour') \
     .save()

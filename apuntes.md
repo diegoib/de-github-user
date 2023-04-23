@@ -69,6 +69,8 @@ gcloud dataproc jobs submit pyspark \
                 --day=16
 
 
-2. añadir particion (hacer)
+1. escribir los pasos y objetivo en el README
+2. añadir particion (hacer): DONE
 3. como se orquestran todos los pasos? 
-4. ver si con os.system aparece la log
+4. ver si con os.system aparece la log: DONE
+5. añadir requirements 

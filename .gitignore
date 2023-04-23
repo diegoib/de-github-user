@@ -1,9 +1,9 @@
 pruebas/
 src/data/
 *.tfstate
+*.tfstate.backup
 *.lock.hcl
-src/terraform/.terraform/
-
+terraform/.terraform/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -24,7 +24,8 @@ variable "BQ_DATASET" {
 }
 
 variable "dataproc" {
-  desription = "Dataproc cluster that is going to process the data"
+  description = "Dataproc cluster that is going to process the data"
   type = string
-  default = "my_project_cluster"
+  default = "myprojectcluster"
 }
+

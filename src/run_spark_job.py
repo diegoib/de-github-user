@@ -2,22 +2,6 @@ import os
 from prefect import flow
 import yaml
 
-
-def runcmd(cmd: str, verbose = False, *args, **kwargs) -> None:
-    '''Executes bash commands in another terminal session'''
-    process = subprocess.Popen(
-        cmd,
-        stdout = subprocess.PIPE,
-        stderr = subprocess.PIPE,
-        text = True,
-        shell = True
-    )
-    std_out, std_err = process.communicate()
-    if verbose:
-        print(std_out.strip(), std_err)
-    pass
-
-
 @flow()
 def submit_job(cluster: str, region: str, spark_file_path: str, temp_dataproc_bucket: str,
                data_bucket: str, bigquery_table: str, year: str, month: str, 

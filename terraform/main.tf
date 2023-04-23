@@ -49,29 +49,28 @@ resource "google_bigquery_dataset" "dataset" {
 }
 
 
-resource "google_dataproc_cluster" "mycluster" {
-  name     = var.dataproc
-  region   = var.region
-
-  cluster_config {
-    staging_bucket = "dataproc-staging-bucket"
-
-    master_config {
-      num_instances = 1
-      machine_type  = "n2-standard-4"
-    }
-
-    worker_config {
-      num_instances    = 0
-    }
-
-    # Override or set some custom properties
-    software_config {
-      image_version = "2.0.35-debian10"
-      override_properties = {
-        "dataproc:dataproc.allow.zero.workers" = "true"
-      }
-    }
-
-  }
-}
+#resource "google_dataproc_cluster" "mycluster" {
+#  name     = var.dataproc
+#  region   = var.region
+#
+#  cluster_config {
+#
+#    master_config {
+#      num_instances = 1
+#      machine_type  = "n2-standard-4"
+#    }
+#
+#    worker_config {
+#      num_instances    = 0
+#    }
+#
+#    # Override or set some custom properties
+#    software_config {
+#      image_version = "2.0.35-debian10"
+#      override_properties = {
+#        "dataproc:dataproc.allow.zero.workers" = "true"
+#      }
+#    }
+#
+#  }
+#}

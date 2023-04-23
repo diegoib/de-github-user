@@ -1,14 +1,10 @@
 GCP:
-  #CLUSTER: cluster-2f70
   CLUSTER: myprojectcluster
   REGION: europe-west2
-  SPARK_PATH_FILE: gs://de_project_bucket_de-zoomcamp-386310/code/transformation_spark.py
-  #TEMP_DATAPROC_BUCKET: dataproc-temp-europe-west2-798822437747-927ytg0x
-  TEMP_DATAPROC_BUCKET: de_project_bucket_de-zoomcamp-386310
-  DATA_BUCKET: de_project_bucket_de-zoomcamp-386310
+  SPARK_PATH_FILE: gs://your-bucket-name/code/transformation_spark.py
+  DATA_BUCKET: your-bucket-name
   BIGQUERY_TABLE: de_project.report
 GH:
   YEAR: 2023
-  MONTH: 1
-  DAY: 16
-  # Only accept True or False
+  MONTH: 4
+  DAY: 1

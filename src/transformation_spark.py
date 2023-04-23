@@ -7,7 +7,6 @@ from pyspark.sql import functions as F
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--temp_dataproc_bucket', required=True)
 parser.add_argument('--data_bucket', required=True)
 parser.add_argument('--bigquery_table', required=True)
 parser.add_argument('--year', required=True)
@@ -15,7 +14,6 @@ parser.add_argument('--month', required=True)
 parser.add_argument('--day', required=True)
 args = parser.parse_args()
 
-temp_dataproc_bucket = args.temp_dataproc_bucket
 data_bucket = args.data_bucket
 bigquery_table = args.bigquery_table
 year = args.year
@@ -26,7 +24,7 @@ spark = SparkSession.builder \
     .appName('test_project') \
     .getOrCreate()
 
-spark.conf.set('temporaryGcsBucket', temp_dataproc_bucket)
+spark.conf.set('temporaryGcsBucket', data_bucket)
 
 path_files = f'gs://{data_bucket}/data/{year}-{month.zfill(2)}-{day.zfill(2)}-*'
 df = spark.read.parquet(path_files)

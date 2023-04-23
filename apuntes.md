@@ -73,4 +73,5 @@ gcloud dataproc jobs submit pyspark \
 2. añadir particion (hacer): DONE
 3. como se orquestran todos los pasos? 
 4. ver si con os.system aparece la log: DONE
-5. añadir requirements 
+5. añadir requirements: DONE
+6. generar blocks a través de python
